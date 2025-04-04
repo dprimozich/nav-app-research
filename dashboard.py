@@ -91,6 +91,8 @@ short_column_names = {
     for col in feature_matrix.columns
 }
 feature_matrix.rename(columns=short_column_names, inplace=True)
+feature_matrix.columns = feature_matrix.columns.astype(str)
+
 
 # Step 4: Clean display (optional: show checkmarks)
 feature_matrix = feature_matrix.applymap(lambda x: '✔️' if x > 0 else '')
