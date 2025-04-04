@@ -85,10 +85,17 @@ feature_matrix = pd.crosstab(
     features_exploded['Key Product Features']
 )
 
-# Step 3: Clean display (optional: show checkmarks)
+# Step 3: Shorten the column names for display
+short_column_names = {
+    col: col.split()[0] + "…" if len(col) > 15 else col
+    for col in feature_matrix.columns
+}
+feature_matrix.rename(columns=short_column_names, inplace=True)
+
+# Step 4: Clean display (optional: show checkmarks)
 feature_matrix = feature_matrix.applymap(lambda x: '✔️' if x > 0 else '')
 
-# Step 4: Display in Streamlit
+# Step 5: Display in Streamlit
 st.dataframe(feature_matrix, use_container_width=True)
 
 
