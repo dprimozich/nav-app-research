@@ -98,9 +98,12 @@ feature_matrix.columns = feature_matrix.columns.astype(str)
 feature_matrix = feature_matrix.applymap(lambda x: '✔️' if x > 0 else '')
 feature_matrix = feature_matrix.astype(str)
 feature_matrix.index = feature_matrix.index.astype(str)
+feature_matrix.columns = ['Unnamed' if not name.strip() else name for name in feature_matrix.columns]
 
 
 # Step 5: Display in Streamlit
+print("Column names:", feature_matrix.columns.tolist())
+
 st.dataframe(feature_matrix, use_container_width=True)
 
 
