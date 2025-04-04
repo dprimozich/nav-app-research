@@ -96,6 +96,8 @@ feature_matrix.columns = feature_matrix.columns.astype(str)
 
 # Step 4: Clean display (optional: show checkmarks)
 feature_matrix = feature_matrix.applymap(lambda x: '✔️' if x > 0 else '')
+feature_matrix = feature_matrix.astype(str)
+
 
 # Step 5: Display in Streamlit
 st.dataframe(feature_matrix, use_container_width=True)
