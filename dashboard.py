@@ -70,6 +70,28 @@ if not filtered_df.empty:
         st.markdown(f"- {feature}")
 else:
     st.info("No features to display for the selected competitor.")
+# --- Feature Comparison Table ---
+st.subheader("🧩 Feature Comparison Across Competitors")
+
+# Step 1: Explode features into individual rows
+features_exploded = df.copy()
+features_exploded = features_exploded.dropna(subset=['Key Product Features'])
+features_exploded['Key Product Features'] = features_exploded['Key Product Features'].str.split(', ')
+features_exploded = features_exploded.explode('Key Product Features')
+
+# Step 2: Create pivot table
+feature_matrix = pd.crosstab(
+    features_exploded['Company'],
+    features_exploded['Key Product Features']
+)
+
+# Step 3: Clean display (optional: show checkmarks)
+feature_matrix = feature_matrix.applymap(lambda x: '✔️' if x > 0 else '')
+
+# Step 4: Display in Streamlit
+st.dataframe(feature_matrix, use_container_width=True)
+
+
 
 # Footer
 st.markdown("---")
